@@ -1,0 +1,33 @@
+{
+  "table_name": "x_onb_lifecycle_request",
+  "label": "Employee Lifecycle Request",
+  "extends": "task",
+  "scope": "x_onb_lifecycle",
+  "description": "Tracks employee onboarding and offboarding requests raised via the Service Catalog.",
+  "fields": [
+    { "name": "u_employee_name",   "type": "string",    "max_length": 100, "mandatory": true,  "label": "Employee Name" },
+    { "name": "u_employee_email",  "type": "email",     "max_length": 100, "mandatory": true,  "label": "Employee Email" },
+    { "name": "u_department",     "type": "reference",  "reference": "cmn_department", "mandatory": true, "label": "Department" },
+    { "name": "u_manager",        "type": "reference",  "reference": "sys_user",        "mandatory": true, "label": "Reporting Manager" },
+    { "name": "u_job_title",      "type": "string",     "max_length": 100, "mandatory": false, "label": "Job Title" },
+    { "name": "u_request_type",   "type": "choice",     "mandatory": true, "label": "Request Type",
+      "choices": ["Onboarding", "Offboarding"] },
+    { "name": "u_joining_date",   "type": "glide_date",  "mandatory": false, "label": "Joining Date (Onboarding only)" },
+    { "name": "u_last_working_date", "type": "glide_date","mandatory": false, "label": "Last Working Date (Offboarding only)" },
+    { "name": "u_location",       "type": "string",     "max_length": 100, "mandatory": false, "label": "Work Location" },
+    { "name": "u_asset_return_required", "type": "boolean", "mandatory": false, "label": "Asset Return Required", "default": false },
+    { "name": "u_access_revoke_required", "type": "boolean", "mandatory": false, "label": "Access Revocation Required", "default": true },
+    { "name": "u_priority_reason", "type": "string",    "max_length": 4000, "mandatory": false, "label": "Notes / Justification" }
+  ],
+  "inherited_fields_used": ["number", "short_description", "description", "state", "priority", "assignment_group", "assigned_to", "sys_created_on", "sys_updated_on"],
+  "number_prefix": "ONB",
+  "states": {
+    "1": "New",
+    "2": "In Progress",
+    "3": "Pending Approval",
+    "4": "Tasks Assigned",
+    "6": "Closed Complete",
+    "7": "Closed Incomplete",
+    "8": "Cancelled"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "ui_policies": [
+    {
+      "catalog_item": "Employee Onboarding Request",
+      "name": "Show Notes only when needed",
+      "condition": "job_title is empty",
+      "actions": [{ "field": "notes", "mandatory": true, "message": "Please explain if job title is not yet finalized." }]
+    },
+    {
+      "catalog_item": "Employee Offboarding Request",
+      "name": "Require Notes when Asset Return NOT selected",
+      "condition": "asset_return_required is false",
+      "actions": [{ "field": "notes", "mandatory": true, "message": "Please explain why no company assets need to be returned." }]
+    },
+    {
+      "catalog_item": "Employee Offboarding Request",
+      "name": "Warn on short notice",
+      "condition": "last_working_date is within 2 days of today",
+      "actions": [{ "field": "last_working_date", "mandatory": false, "message": "Short-notice offboarding: Security task SLA may not be met.", "type": "warning" }]
+    }
+  ]
+}

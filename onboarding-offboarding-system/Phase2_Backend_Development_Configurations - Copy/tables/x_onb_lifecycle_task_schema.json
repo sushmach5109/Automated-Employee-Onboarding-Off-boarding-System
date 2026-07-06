@@ -1,0 +1,20 @@
+{
+  "table_name": "x_onb_lifecycle_task",
+  "label": "Employee Lifecycle Task",
+  "extends": "task",
+  "scope": "x_onb_lifecycle",
+  "description": "Child tasks generated per department (IT, Facilities, Security) for a parent lifecycle request.",
+  "fields": [
+    { "name": "u_parent_request", "type": "reference", "reference": "x_onb_lifecycle_request", "mandatory": true, "label": "Parent Request" },
+    { "name": "u_department_type", "type": "choice", "mandatory": true, "label": "Department",
+      "choices": ["IT", "Facilities", "Security"] },
+    { "name": "u_checklist", "type": "string", "max_length": 4000, "mandatory": false, "label": "Checklist / Action Items" }
+  ],
+  "inherited_fields_used": ["number", "short_description", "state", "assignment_group", "assigned_to", "sla_due", "sys_created_on"],
+  "number_prefix": "ONBT",
+  "sla_mapping": {
+    "IT": "IT Provisioning/Deprovisioning SLA - 24 business hours",
+    "Facilities": "Facilities Setup/Clearance SLA - 16 business hours",
+    "Security": "Security Access Grant/Revoke SLA - 8 business hours"
+  }
+}

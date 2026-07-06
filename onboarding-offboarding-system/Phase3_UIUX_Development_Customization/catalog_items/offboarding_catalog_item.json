@@ -1,0 +1,30 @@
+{
+  "name": "Employee Offboarding Request",
+  "sys_class_name": "sc_cat_item",
+  "category": "HR Services",
+  "short_description": "Raise a request to offboard a departing employee — provisions IT, Facilities, and Security revocation tasks automatically.",
+  "table_target": "x_onb_lifecycle_request",
+  "workflow_or_flow": "Offboarding Fulfillment Flow (see Phase5/flows/offboarding_flow.json)",
+  "variables": [
+    { "name": "employee_name", "type": "reference", "reference_table": "sys_user", "mandatory": true, "label": "Departing Employee" },
+    { "name": "employee_email", "type": "single_line_text", "mandatory": true, "label": "Employee Email (auto-filled)" },
+    { "name": "department", "type": "reference", "reference_table": "cmn_department", "mandatory": true, "label": "Department" },
+    { "name": "manager", "type": "reference", "reference_table": "sys_user", "mandatory": true, "label": "Reporting Manager" },
+    { "name": "last_working_date", "type": "date", "mandatory": true, "label": "Last Working Date" },
+    { "name": "asset_return_required", "type": "checkbox", "mandatory": false, "label": "Company Assets to be Returned", "default": true },
+    { "name": "access_revoke_required", "type": "checkbox", "mandatory": false, "label": "System/Building Access to Revoke", "default": true },
+    { "name": "notes", "type": "multi_line_text", "mandatory": false, "label": "Additional Notes" }
+  ],
+  "field_mapping_on_submit": {
+    "u_employee_name": "employee_name.name",
+    "u_employee_email": "employee_email",
+    "u_department": "department",
+    "u_manager": "manager",
+    "u_last_working_date": "last_working_date",
+    "u_asset_return_required": "asset_return_required",
+    "u_access_revoke_required": "access_revoke_required",
+    "u_priority_reason": "notes",
+    "u_request_type": "'Offboarding' (hardcoded)",
+    "state": "1 (New)"
+  }
+}

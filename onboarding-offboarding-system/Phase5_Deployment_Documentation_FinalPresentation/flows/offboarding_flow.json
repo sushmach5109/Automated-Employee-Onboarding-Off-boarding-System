@@ -1,0 +1,48 @@
+{
+  "flow_name": "Offboarding Fulfillment Flow",
+  "application": "x_onb_lifecycle",
+  "trigger": {
+    "type": "Service Catalog",
+    "catalog_item": "Employee Offboarding Request"
+  },
+  "note": "Flow Designer flows are visual and stored as internal flow/action records, not flat JS. This file is a build blueprint: recreate these steps in Flow Designer exactly as listed.",
+  "steps": [
+    {
+      "step": 1,
+      "action": "Create Record",
+      "table": "x_onb_lifecycle_request",
+      "details": "Map catalog variables to table fields as defined in catalog_items/offboarding_catalog_item.json. Set state = New."
+    },
+    {
+      "step": 2,
+      "action": "Flow Logic: AutoAssignTasks business rule fires on insert",
+      "details": "Creates IT/Facilities/Security tasks with offboarding-specific checklist text (disable accounts, recover badge, revoke access)."
+    },
+    {
+      "step": 3,
+      "action": "If Condition",
+      "details": "IF last_working_date is within 2 business days of today THEN escalate priority of all 3 tasks to 'High' and notify department managers immediately."
+    },
+    {
+      "step": 4,
+      "action": "Notification",
+      "details": "Send 'Offboarding Initiated' notification to Security group first (access revocation is time-critical), then IT and Facilities."
+    },
+    {
+      "step": 5,
+      "action": "Wait For Condition",
+      "details": "Wait until x_onb_lifecycle_request.state == 'Closed Complete'."
+    },
+    {
+      "step": 6,
+      "action": "Notification",
+      "details": "Send 'Offboarding Complete' confirmation to HR Operations and the manager, confirming all access is revoked and assets recovered."
+    },
+    {
+      "step": 7,
+      "action": "Update Record",
+      "table": "sc_req_item",
+      "details": "Close the originating catalog request item (RITM) as Closed Complete."
+    }
+  ]
+}

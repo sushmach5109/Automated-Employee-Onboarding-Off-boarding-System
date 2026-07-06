@@ -1,0 +1,58 @@
+<div class="panel panel-default onb-dashboard">
+  <div class="panel-heading">
+    <h3>Employee Lifecycle Dashboard</h3>
+  </div>
+  <div class="panel-body">
+
+    <div class="row onb-summary-cards">
+      <div class="col-sm-3">
+        <div class="onb-card onb-card-total">
+          <div class="onb-card-number">{{data.totalRequests}}</div>
+          <div class="onb-card-label">Total Requests</div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="onb-card onb-card-open">
+          <div class="onb-card-number">{{data.openRequests}}</div>
+          <div class="onb-card-label">Open</div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="onb-card onb-card-overdue">
+          <div class="onb-card-number">{{data.overdueTasks}}</div>
+          <div class="onb-card-label">Overdue Tasks</div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="onb-card onb-card-closed">
+          <div class="onb-card-number">{{data.closedThisMonth}}</div>
+          <div class="onb-card-label">Closed This Month</div>
+        </div>
+      </div>
+    </div>
+
+    <table class="table table-striped onb-table">
+      <thead>
+        <tr>
+          <th>Request #</th>
+          <th>Employee</th>
+          <th>Type</th>
+          <th>Department</th>
+          <th>Status</th>
+          <th>Created</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="req in data.requests">
+          <td>{{req.number}}</td>
+          <td>{{req.employee_name}}</td>
+          <td>{{req.request_type}}</td>
+          <td>{{req.department}}</td>
+          <td><span class="label" ng-class="req.stateClass">{{req.state}}</span></td>
+          <td>{{req.created}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>

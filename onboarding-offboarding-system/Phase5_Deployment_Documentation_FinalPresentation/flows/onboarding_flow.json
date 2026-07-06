@@ -1,0 +1,48 @@
+{
+  "flow_name": "Onboarding Fulfillment Flow",
+  "application": "x_onb_lifecycle",
+  "trigger": {
+    "type": "Service Catalog",
+    "catalog_item": "Employee Onboarding Request"
+  },
+  "note": "Flow Designer flows are visual and stored as internal flow/action records, not flat JS. This file is a build blueprint: recreate these steps in Flow Designer exactly as listed.",
+  "steps": [
+    {
+      "step": 1,
+      "action": "Create Record",
+      "table": "x_onb_lifecycle_request",
+      "details": "Map catalog variables to table fields as defined in catalog_items/onboarding_catalog_item.json. Set state = New."
+    },
+    {
+      "step": 2,
+      "action": "Script Step: Call LifecycleRequestUtils.createDepartmentTasks",
+      "details": "Alternatively, rely purely on the AutoAssignTasks business rule fired by the record insert in Step 1 — recommended to keep logic in one place (business rule) rather than duplicating in the flow."
+    },
+    {
+      "step": 3,
+      "action": "Wait For Condition",
+      "details": "Wait until x_onb_lifecycle_request.state == 'Tasks Assigned' (confirms business rule completed)."
+    },
+    {
+      "step": 4,
+      "action": "Notification",
+      "details": "Send 'Onboarding Request Created' notification to HR Operations group and the manager (see notifications/notification_definitions.json)."
+    },
+    {
+      "step": 5,
+      "action": "Wait For Condition",
+      "details": "Wait until x_onb_lifecycle_request.state == 'Closed Complete' (set by UpdateRequestStatus business rule when all 3 dept tasks close)."
+    },
+    {
+      "step": 6,
+      "action": "Notification",
+      "details": "Send 'Onboarding Complete' notification to HR Operations and the manager, confirming employee is fully provisioned."
+    },
+    {
+      "step": 7,
+      "action": "Update Record",
+      "table": "sc_req_item",
+      "details": "Close the originating catalog request item (RITM) as Closed Complete, linking back to the fulfilled x_onb_lifecycle_request."
+    }
+  ]
+}

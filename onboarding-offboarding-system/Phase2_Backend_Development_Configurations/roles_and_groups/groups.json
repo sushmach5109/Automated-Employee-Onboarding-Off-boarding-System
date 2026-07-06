@@ -1,0 +1,24 @@
+{
+  "groups": [
+    {
+      "name": "IT Support",
+      "description": "Handles IT provisioning/deprovisioning tasks (laptop, accounts, software access).",
+      "roles": ["x_onb_lifecycle.it_agent"]
+    },
+    {
+      "name": "Facilities",
+      "description": "Handles workstation setup/teardown, badge, parking, desk allocation.",
+      "roles": ["x_onb_lifecycle.facilities_agent"]
+    },
+    {
+      "name": "Security",
+      "description": "Handles physical/system access grant and revocation.",
+      "roles": ["x_onb_lifecycle.security_agent"]
+    },
+    {
+      "name": "HR Operations",
+      "description": "Raises and monitors lifecycle requests; owns the HR dashboard.",
+      "roles": ["x_onb_lifecycle.hr"]
+    }
+  ]
+}

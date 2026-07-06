@@ -1,0 +1,30 @@
+{
+  "name": "Employee Onboarding Request",
+  "sys_class_name": "sc_cat_item",
+  "category": "HR Services",
+  "short_description": "Raise a request to onboard a new employee — provisions IT, Facilities, and Security tasks automatically.",
+  "table_target": "x_onb_lifecycle_request",
+  "workflow_or_flow": "Onboarding Fulfillment Flow (see Phase5/flows/onboarding_flow.json)",
+  "variables": [
+    { "name": "employee_name", "type": "single_line_text", "mandatory": true, "label": "New Employee Full Name" },
+    { "name": "employee_email", "type": "single_line_text", "mandatory": true, "label": "New Employee Email" },
+    { "name": "department", "type": "reference", "reference_table": "cmn_department", "mandatory": true, "label": "Department" },
+    { "name": "manager", "type": "reference", "reference_table": "sys_user", "mandatory": true, "label": "Reporting Manager" },
+    { "name": "job_title", "type": "single_line_text", "mandatory": false, "label": "Job Title" },
+    { "name": "joining_date", "type": "date", "mandatory": true, "label": "Joining Date" },
+    { "name": "location", "type": "single_line_text", "mandatory": false, "label": "Work Location" },
+    { "name": "notes", "type": "multi_line_text", "mandatory": false, "label": "Additional Notes" }
+  ],
+  "field_mapping_on_submit": {
+    "u_employee_name": "employee_name",
+    "u_employee_email": "employee_email",
+    "u_department": "department",
+    "u_manager": "manager",
+    "u_job_title": "job_title",
+    "u_joining_date": "joining_date",
+    "u_location": "location",
+    "u_priority_reason": "notes",
+    "u_request_type": "'Onboarding' (hardcoded)",
+    "state": "1 (New)"
+  }
+}

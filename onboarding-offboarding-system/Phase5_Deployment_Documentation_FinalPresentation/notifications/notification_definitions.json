@@ -1,0 +1,44 @@
+{
+  "notifications": [
+    {
+      "name": "Onboarding Request Created",
+      "table": "x_onb_lifecycle_request",
+      "trigger": "Event: x_onb_lifecycle.request.state_changed (new_state == 'Tasks Assigned', request_type == 'Onboarding')",
+      "recipients": ["HR Operations group", "Reporting Manager (u_manager)"],
+      "subject": "Onboarding started for ${u_employee_name}",
+      "body": "A new onboarding request (${number}) has been created for ${u_employee_name}, joining ${u_department} on ${u_joining_date}. IT, Facilities, and Security tasks have been assigned."
+    },
+    {
+      "name": "Department Task Assigned",
+      "table": "x_onb_lifecycle_task",
+      "trigger": "Record inserted",
+      "recipients": ["Assignment Group (assignment_group)"],
+      "subject": "New ${u_department_type} task: ${short_description}",
+      "body": "You have a new task for ${u_parent_request.u_employee_name} (${u_parent_request.u_request_type}). Checklist:\n${u_checklist}\nDue by SLA."
+    },
+    {
+      "name": "SLA Breach Escalation",
+      "table": "x_onb_lifecycle_task",
+      "trigger": "Scheduled Job: Check Overdue Lifecycle Tasks (runs hourly, calls SLAUtils.getAllBreachedTasks())",
+      "recipients": ["Assignment Group (assignment_group)", "Assignment Group Manager"],
+      "subject": "OVERDUE: ${short_description}",
+      "body": "This task is past its SLA due date. Please action immediately or update the request status."
+    },
+    {
+      "name": "Offboarding Complete",
+      "table": "x_onb_lifecycle_request",
+      "trigger": "Event: x_onb_lifecycle.request.state_changed (new_state == 'Closed Complete', request_type == 'Offboarding')",
+      "recipients": ["HR Operations group", "Reporting Manager (u_manager)"],
+      "subject": "Offboarding complete for ${u_employee_name}",
+      "body": "All IT, Facilities, and Security offboarding tasks are complete for ${u_employee_name}. Access has been revoked and assets recovered."
+    },
+    {
+      "name": "Onboarding Complete",
+      "table": "x_onb_lifecycle_request",
+      "trigger": "Event: x_onb_lifecycle.request.state_changed (new_state == 'Closed Complete', request_type == 'Onboarding')",
+      "recipients": ["HR Operations group", "Reporting Manager (u_manager)"],
+      "subject": "Onboarding complete for ${u_employee_name}",
+      "body": "${u_employee_name} is fully provisioned and ready for Day 1. All IT, Facilities, and Security tasks are complete."
+    }
+  ]
+}

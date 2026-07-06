@@ -1,0 +1,56 @@
+{
+  "access_controls": [
+    {
+      "table": "x_onb_lifecycle_request",
+      "operation": "read",
+      "roles": ["x_onb_lifecycle.admin", "x_onb_lifecycle.hr"],
+      "condition": "Requester (caller_id) matches current user OR user has hr/admin role",
+      "script": "gs.hasRole('x_onb_lifecycle.admin') || gs.hasRole('x_onb_lifecycle.hr') || current.caller_id == gs.getUserID();"
+    },
+    {
+      "table": "x_onb_lifecycle_request",
+      "operation": "write",
+      "roles": ["x_onb_lifecycle.admin", "x_onb_lifecycle.hr"],
+      "condition": "Only admin/HR may edit the parent request",
+      "script": "gs.hasRole('x_onb_lifecycle.admin') || gs.hasRole('x_onb_lifecycle.hr');"
+    },
+    {
+      "table": "x_onb_lifecycle_request",
+      "operation": "create",
+      "roles": ["x_onb_lifecycle.admin", "x_onb_lifecycle.hr"],
+      "condition": "Only admin/HR may create requests directly (others go through the catalog item, which runs as admin via Flow Designer)"
+    },
+    {
+      "table": "x_onb_lifecycle_request",
+      "operation": "delete",
+      "roles": ["x_onb_lifecycle.admin"],
+      "condition": "Only admin may delete"
+    },
+    {
+      "table": "x_onb_lifecycle_task",
+      "operation": "read",
+      "roles": ["x_onb_lifecycle.admin", "x_onb_lifecycle.hr", "x_onb_lifecycle.it_agent", "x_onb_lifecycle.facilities_agent", "x_onb_lifecycle.security_agent"],
+      "condition": "Agents may read tasks belonging to their own department",
+      "script": "gs.hasRole('x_onb_lifecycle.admin') || gs.hasRole('x_onb_lifecycle.hr') || (gs.hasRole('x_onb_lifecycle.it_agent') && current.u_department_type == 'IT') || (gs.hasRole('x_onb_lifecycle.facilities_agent') && current.u_department_type == 'Facilities') || (gs.hasRole('x_onb_lifecycle.security_agent') && current.u_department_type == 'Security');"
+    },
+    {
+      "table": "x_onb_lifecycle_task",
+      "operation": "write",
+      "roles": ["x_onb_lifecycle.admin", "x_onb_lifecycle.it_agent", "x_onb_lifecycle.facilities_agent", "x_onb_lifecycle.security_agent"],
+      "condition": "Agents may only update tasks assigned to their own department",
+      "script": "gs.hasRole('x_onb_lifecycle.admin') || (gs.hasRole('x_onb_lifecycle.it_agent') && current.u_department_type == 'IT') || (gs.hasRole('x_onb_lifecycle.facilities_agent') && current.u_department_type == 'Facilities') || (gs.hasRole('x_onb_lifecycle.security_agent') && current.u_department_type == 'Security');"
+    },
+    {
+      "table": "x_onb_lifecycle_task",
+      "operation": "create",
+      "roles": ["x_onb_lifecycle.admin"],
+      "condition": "Tasks are only created programmatically by the AutoAssignTasks business rule (runs as system/admin)"
+    },
+    {
+      "table": "x_onb_lifecycle_task",
+      "operation": "delete",
+      "roles": ["x_onb_lifecycle.admin"],
+      "condition": "Only admin may delete"
+    }
+  ]
+}

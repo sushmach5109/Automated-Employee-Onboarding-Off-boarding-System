@@ -1,0 +1,32 @@
+.onb-dashboard {
+  .onb-summary-cards {
+    margin-bottom: 20px;
+  }
+
+  .onb-card {
+    border-radius: 6px;
+    padding: 16px;
+    text-align: center;
+    color: #fff;
+
+    .onb-card-number {
+      font-size: 32px;
+      font-weight: 700;
+    }
+
+    .onb-card-label {
+      font-size: 13px;
+      text-transform: uppercase;
+      opacity: 0.9;
+    }
+  }
+
+  .onb-card-total    { background: linear-gradient(135deg, #6366f1, #4338ca); }
+  .onb-card-open     { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+  .onb-card-overdue  { background: linear-gradient(135deg, #f87171, #b91c1c); }
+  .onb-card-closed   { background: linear-gradient(135deg, #34d399, #047857); }
+
+  .onb-table {
+    margin-top: 10px;
+  }
+}

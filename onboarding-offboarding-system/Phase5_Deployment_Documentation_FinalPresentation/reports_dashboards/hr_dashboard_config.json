@@ -1,0 +1,48 @@
+{
+  "reports": [
+    {
+      "name": "Requests by Status",
+      "type": "Pie Chart",
+      "table": "x_onb_lifecycle_request",
+      "group_by": "state"
+    },
+    {
+      "name": "Requests by Department",
+      "type": "Bar Chart",
+      "table": "x_onb_lifecycle_request",
+      "group_by": "u_department"
+    },
+    {
+      "name": "Average Time to Close (days)",
+      "type": "Single Score / Metric",
+      "table": "x_onb_lifecycle_request",
+      "aggregate": "AVG(sys_updated_on - sys_created_on)",
+      "condition": "state = Closed Complete"
+    },
+    {
+      "name": "Overdue Tasks by Department",
+      "type": "Bar Chart",
+      "table": "x_onb_lifecycle_task",
+      "group_by": "u_department_type",
+      "condition": "SLA due date < now AND state != Closed Complete"
+    },
+    {
+      "name": "Onboarding vs Offboarding Volume (Monthly Trend)",
+      "type": "Line Chart",
+      "table": "x_onb_lifecycle_request",
+      "group_by": "u_request_type",
+      "trend_by": "sys_created_on (monthly)"
+    }
+  ],
+  "dashboard": {
+    "name": "Employee Lifecycle HR Dashboard",
+    "audience_roles": ["x_onb_lifecycle.hr", "x_onb_lifecycle.admin"],
+    "layout": [
+      { "row": 1, "widgets": ["Requests by Status", "Requests by Department"] },
+      { "row": 2, "widgets": ["Average Time to Close (days)", "Overdue Tasks by Department"] },
+      { "row": 3, "widgets": ["Onboarding vs Offboarding Volume (Monthly Trend)"] }
+    ],
+    "refresh_interval_seconds": 60,
+    "portal_placement": "Service Portal page 'onb-hr-dashboard' embedding the employee_lifecycle_dashboard widget plus these 5 reports as Report widgets."
+  }
+}

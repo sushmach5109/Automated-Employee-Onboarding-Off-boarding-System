@@ -1,0 +1,29 @@
+{
+  "roles": [
+    {
+      "name": "x_onb_lifecycle.admin",
+      "description": "Full administrative access to the Employee Onboarding & Offboarding application.",
+      "contains_roles": ["x_onb_lifecycle.hr"]
+    },
+    {
+      "name": "x_onb_lifecycle.hr",
+      "description": "HR staff who create/view/close lifecycle requests and view the HR dashboard.",
+      "contains_roles": []
+    },
+    {
+      "name": "x_onb_lifecycle.it_agent",
+      "description": "IT Support agents who work IT-department lifecycle tasks.",
+      "contains_roles": []
+    },
+    {
+      "name": "x_onb_lifecycle.facilities_agent",
+      "description": "Facilities agents who work Facilities-department lifecycle tasks.",
+      "contains_roles": []
+    },
+    {
+      "name": "x_onb_lifecycle.security_agent",
+      "description": "Security agents who work Security-department lifecycle tasks.",
+      "contains_roles": []
+    }
+  ]
+}
